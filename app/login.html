@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- start: Meta -->
+        <meta charset="utf-8">
+        <title>Universal Management System</title>
+
+        <!-- end: Meta -->
+
+        <!-- start: Mobile Specific -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- end: Mobile Specific -->
+
+        <!-- start: CSS -->
+        <link id="bootstrap-style" href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link id="base-style" href="css/style.css" rel="stylesheet">
+        <link id="base-style-responsive" href="css/style-responsive.css" rel="stylesheet">
+        <!-- end: CSS -->
+
+        <!-- start: Favicon -->
+        <!--
+        <link rel="shortcut icon" href="img/favicon.ico">
+        -->
+        <!-- end: Favicon -->
+    </head>
+
+    <body style="background-color: #080808">
+        <div class="container-fluid-full">
+            <div class="row-fluid">
+
+                <div class="row-fluid">
+                    <div class="login-box">
+                        <div class="icons">
+                            <a href="#"><i class="halflings-icon cog"></i></a>
+                        </div>
+                        <h2>登录</h2>
+                        <form class="form-horizontal" id="form">
+                            <fieldset>
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="halflings-icon user"></i></span>
+                                    <input class="input-large span10" name="username" id="username" type="text" placeholder="用户名" value="admin"/>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="halflings-icon lock"></i></span>
+                                    <input class="input-large span10" name="password" id="password" type="password" placeholder="密码" value="111111"/>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="button-login">
+                                    <button id="confirm" type="button" class="btn btn-primary">提交</button>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div id="alert" class="alert alert-danger" style="margin: 5px 5px; display: none">
+                                    <h4 class="alert-heading">错误</h4>
+                                    <p id="reason"></p>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/fluid-row-->
+
+        <!-- start: JavaScript-->
+        <script src="lib/jquery-1.9.1.min.js"></script>
+        <script src="lib/jquery-migrate-1.0.0.min.js"></script>
+        <script src="lib/jquery-ui-1.10.0.custom.min.js"></script>
+
+        <script src="lib/modernizr.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+
+
+        <script src="lib/jquery.uniform.min.js"></script>
+        <script src="lib/jquery.noty.js"></script>
+        <!-- end: JavaScript-->
+		<script>
+			$(document).ready(function(){
+				$('#confirm').on('click', function(){
+					var data = {
+						"username": $('#username').get(0).value,
+						"password": $('#password').get(0).value
+					}
+					$.ajax({
+						type: 'POST',
+						url: '/management/index.json',
+						data: JSON.stringify(data),
+						dataType: 'json',
+						contentType: 'application/json',
+						success: function(x) {
+							if(x.data.login) {
+							    window.location.replace("./index.html");
+							} else {
+							    $('#reason').text("用户名或密码错误");
+							    $('#alert').show();
+							}
+						},
+						error: function() {
+						    $('#reason').text("服务器错误");
+						    $('#alert').show();
+						}
+					});
+				});
+			});
+		</script>
+    </body>
+</html>

@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en" id="ng-app" ng-app="AppModule">
+    <head>
+        <!-- start: Meta -->
+        <meta charset="utf-8">
+        <title>UMS</title>
+        <!-- end: Meta -->
+
+        <!-- start: Mobile Specific -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- end: Mobile Specific -->
+
+        <!-- start: CSS -->
+        <link id="bootstrap-style" href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link id="base-style" href="css/style.css" rel="stylesheet">
+        <link id="base-style-responsive" href="css/style-responsive.css" rel="stylesheet">
+        <link href="css/preload.css" rel="stylesheet">
+        <!-- end: CSS -->
+
+        <!-- start: Favicon -->
+        <!--
+        <link rel="shortcut icon" href="img/favicon.ico">
+        -->
+        <!-- end: Favicon -->
+
+    </head>
+
+    <body>
+        <!-- start: Header -->
+        <div class="navbar" ng-controller="NavCtrl">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand"><img style="height: 36px" /><span>{{brand}}</span></a>
+
+                    <div class="nav-no-collapse header-nav">
+                        <ul class="nav pull-right">
+                            <li class="dropdown hidden-phone">
+                                <a class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <i class="halflings-icon white list-alt"></i>{{user.currentOrg.name}}
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu notifications">
+                                    <li class="dropdown-menu-title">
+                                        <span>{{selectOrg}}</span>
+                                        <!--<a href="#refresh"><i class="icon-repeat"></i></a>-->
+                                    </li>
+                                    <li ng-repeat="org in organizations">
+                                        <a ng-click="select($index)">
+                                            <span class="icon blue"><i class="icon-sitemap"></i></span>
+                                            <span class="message">{{org.name}}</span>
+                                        </a>
+                                    </li>
+                                    <!--
+                                    <li class="dropdown-menu-sub-footer">
+                                        <a>{{user.currentOrg.name}}</a>
+                                    </li>
+                                    -->
+                                </ul>
+                            </li>
+
+                            <!-- start: User Dropdown -->
+                            <li class="dropdown">
+                                <a class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <i class="halflings-icon white user"></i> {{user.code}} | {{user.name}}
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-menu-title">
+                                        <span>{{userRole}}: {{user.role.name}}</span>
+                                    </li>
+                                    <li><a ng-click="logout()"><i class="halflings-icon off"></i> {{logoutLabel}}</a></li>
+                                </ul>
+                            </li>
+                            <!-- end: User Dropdown -->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- start: Header -->
+
+        <div class="container-fluid-full">
+            <div class="row-fluid">
+
+                <!-- start: Main Menu -->
+                <div id="sidebar-left" class="span2" ng-controller="NavMenuCtrl">
+                    <div class="nav-collapse sidebar-nav">
+                        <div metro-menu menu-data="menus" ></div>
+                    </div>
+                </div>
+                <!-- end: Main Menu -->
+
+                <div id="content" class="span10">
+                    <!-- start: Status -->
+                    <div ng-controller="SystemStatusCtrl">
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="icon-home"></i>
+                                <a href="#/about" ng-click="resetMenu()">{{home}}</a>
+                                <i class="icon-angle-right"></i>
+                            </li>
+                            <li>
+                                <a>{{breadcrumb}}</a>
+                            </li>
+                        </ul>
+
+                        <div metro-wait ng-show="showWait"></div>
+
+
+                        <div class="alert alert-{{message.type}} system-status" ng-show="showMessage">
+                            <button type="button" class="close" ng-click="hide()">×</button>
+                            <button type="button" class="close status-detail" ng-click="toggleDetail()"><i class="{{icon}}"></i></button>
+
+                            <h4 class="alert-heading">{{message.head}}</h4>
+                            <p ng-show="showDetail">{{message.detail}}</p>
+                        </div>
+
+                    </div>
+                    <!-- end: Status -->
+
+                    <div ng-view></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- start: JavaScript Lib-->
+        <script src="lib/jquery-1.9.1.min.js"></script>
+        <script src="lib/jquery-migrate-1.0.0.min.js"></script>
+        <script src="lib/jquery-ui-1.10.0.custom.min.js"></script>
+
+        <script src="lib/modernizr.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+
+        <script src="lib/excanvas.js"></script>
+        <script src="lib/jquery.flot.js"></script>
+        <script src="lib/jquery.flot.pie.js"></script>
+        <script src="lib/jquery.flot.stack.js"></script>
+        <script src="lib/jquery.flot.resize.min.js"></script>
+        <script src="lib/jquery.uniform.min.js"></script>
+        <script src="lib/jquery.noty.js"></script>
+        <script src="lib/jquery.uploadify-3.1.min.js"></script>
+        <script src="lib/jquery.gritter.min.js"></script>
+        <script src="lib/jquery.knob.modified.js"></script>
+        <script src="lib/jquery.sparkline.min.js"></script>
+
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
+        <script src="lib/angular-resource.min.js"></script>
+        <!-- end: JavaScript Lib-->
+        <script src="angular_modules/directives.js"></script>
+        <script src="angular_modules/service.js"></script>
+        <script src="angular_modules/l10n.js"></script>
+
+        <script src="res/en_us.js"></script>
+        <script src="res/zh_cn.js"></script>
+
+        <script src="src/app.js"></script>
+        <script src="src/controller.js"></script>
+
+        <script src="src/settings/settings.js"></script>
+        <script src="src/chgpwd/chgpwd.js"></script>
+        <script src="src/about/about.js"></script>
+        <script src="src/menu/menu.js"></script>
+        <script src="src/menu/menuEdit.js"></script>
+        <script src="src/menu/submenu.js"></script>
+        <script src="src/menu/submenuEdit.js"></script>
+        <script src="src/user/user.js"></script>
+        <script src="src/user/userEdit.js"></script>
+        <script src="src/role/role.js"></script>
+        <script src="src/role/roleEdit.js"></script>
+        <script src="src/organization/organization.js"></script>
+        <script src="src/organization/organizationEdit.js"></script>
+        <script src="src/dictionary/dictType.js"></script>
+        <script src="src/dictionary/dictTypeEdit.js"></script>
+        <script src="src/dictionary/globalDict.js"></script>
+        <script src="src/dictionary/globalDictEdit.js"></script>
+        <script src="src/dictionary/localDict.js"></script>
+        <script src="src/dictionary/localDictEdit.js"></script>
+    </body>
+</html>
