@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="ng-app" ng-app="AppModule">
     <head>
         <!-- start: Meta -->
         <meta charset="utf-8">
@@ -26,7 +26,7 @@
     </head>
 
     <body style="background-color: #080808">
-        <div class="container-fluid-full">
+        <div class="container-fluid-full" ng-controller="LoginCtrl">
             <div class="row-fluid">
 
                 <div class="row-fluid">
@@ -50,7 +50,7 @@
                                 <div class="clearfix"></div>
 
                                 <div class="button-login">
-                                    <button id="confirm" type="button" class="btn btn-primary">提交</button>
+                                    <button id="confirm" type="button" class="btn btn-primary" ng-click="login()">提交</button>
                                 </div>
 
                                 <div class="clearfix"></div>
@@ -79,8 +79,15 @@
 
         <script src="lib/jquery.uniform.min.js"></script>
         <script src="lib/jquery.noty.js"></script>
+
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
+        <script src="lib/angular-resource.min.js"></script>
+
+        <script src="src/login.js"></script>        
         <!-- end: JavaScript-->
 		<script>
+            /***
 			$(document).ready(function(){
 				$('#confirm').on('click', function(){
 					var data = {
@@ -107,7 +114,8 @@
 						}
 					});
 				});
-			});
+            });
+            */
 		</script>
     </body>
 </html>

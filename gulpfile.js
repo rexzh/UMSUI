@@ -174,7 +174,7 @@ gulp.task('html:watch', function() {
     if (config.production) {
         return;
     }
-    gulp.watch([config.src + "/src/**/*.html"], ['copy']);
+    gulp.watch([config.src + "/src/**/*.html", config.src + "/*.html"], ['copy']);
 });
 
 gulp.task('json:watch', function() {
