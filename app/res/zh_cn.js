@@ -6,7 +6,7 @@ l10n.addResource('zh_cn', {
     "Organization": "机构",
     "Menu": "菜单",
     "Submenu": "子菜单",
-    "Settings": "设置",
+    "Preference": "用户偏好",
     "Password": "密码",
     "Global Dictionary": "全局字典",
     "Local Dictionary": "局部字典",
