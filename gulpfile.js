@@ -160,7 +160,14 @@ gulp.task('js:watch', function() {
     if (config.production) {
         return;
     }
-    gulp.watch([config.src + "/src/*.js", config.src + "src/**/*.js"], ['copy']);
+    gulp.watch([config.src + "/src/*.js", config.src + "src/**/*.js", config.src + "angular_modules/*.js"], ['copy']);
+});
+
+gulp.task('res:watch', function() {
+    if (config.production) {
+        return;
+    }
+    gulp.watch([config.src + "/res/*.js"], ['copy']);
 });
 
 gulp.task('html:watch', function() {
@@ -249,6 +256,7 @@ gulp.task('build', gulpSequence(
     //"less:watch",
     "css:watch",
     "js:watch",
+    "res:watch",
     //"copyUME",
     "html:watch",
     "indexhttml:watch",
