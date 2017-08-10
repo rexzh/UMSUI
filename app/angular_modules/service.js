@@ -85,6 +85,8 @@
                         var deferred = $q.defer();
                         $http.post(path, arg, cfg).then(function(resp){
                             deferred.resolve(resp.data);
+                        }, function(err){
+                            deferred.reject(err);
                         });
                         return deferred.promise;
                     },
@@ -93,6 +95,8 @@
                         var deferred = $q.defer();
                         $http.put(path, arg, cfg).then(function(resp){
                             deferred.resolve(resp.data);
+                        }, function(err){
+                            deferred.reject(err);
                         });
                         return deferred.promise;
                     },
@@ -101,6 +105,8 @@
                         var deferred = $q.defer();
                         $http.delete(path, arg, cfg).then(function(resp){
                             deferred.resolve(resp.data);
+                        }, function(err){
+                            deferred.reject(err);
                         });
                         return deferred.promise;
                     }

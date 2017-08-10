@@ -160,7 +160,7 @@ gulp.task('js:watch', function() {
     if (config.production) {
         return;
     }
-    gulp.watch([config.src + "/src/*.js", config.src + "src/**/*.js", config.src + "angular_modules/*.js"], ['copy']);
+    gulp.watch([config.src + "/src/*.js", config.src + "/src/**/*.js", config.src + "/angular_modules/*.js"], ['copy']);
 });
 
 gulp.task('res:watch', function() {
