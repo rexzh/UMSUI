@@ -58,6 +58,9 @@ app.constant('routes', [
     {when: '/localDict/', templateUrl: './src/dictionary/localDict.html', controller: 'LocalDictCtrl', name: 'Local Dictionary'},
     {when: '/localDictAdd/', templateUrl: './src/dictionary/localDictEdit.html', controller: 'LocalDictEditCtrl', name: 'Local Dictionary'},
     {when: '/localDictModify/:id', templateUrl: './src/dictionary/localDictEdit.html', controller: 'LocalDictEditCtrl', name: 'Local Dictionary'},
+    {when: '/sysConfig/', templateUrl: './src/sysConfig/sysConfig.html', controller: 'SysConfigCtrl', name: 'System Config'},
+    {when: '/sysConfigAdd/', templateUrl: './src/sysConfig/sysConfigEdit.html', controller: 'SysConfigEditCtrl'},
+    {when: '/sysConfigModify/:id', templateUrl: './src/sysConfig/sysConfigEdit.html', controller: 'SysConfigEditCtrl'},
     {when: '/upload', templateUrl: './src/upload/upload.html', controller: 'UploadCtrl', name: 'Upload'},
     {when: '/404/', templateUrl: './src/404.html'}
 ]);
@@ -79,7 +82,7 @@ app.config(function ($routeProvider, $LProvider, routes) {
     });
 }).config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('ajaxInterceptor');
-}]).run(function(resize, rest) {
+}]).run(function($window, resize, rest) {
     var base_url = '/management/';
     //var base_url = 'localhost:8000/management/';
     rest.init(base_url);

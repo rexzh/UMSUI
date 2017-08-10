@@ -1,4 +1,11 @@
-﻿var app = angular.module('LoginModule', ['http.service'])
+﻿var app = angular.module('LoginModule', ['http.service', 'l10n'])
+.config(function($LProvider){
+    var lang = localStorage.getItem('lang');
+    if(lang)
+        $LProvider.setLocale(lang);
+    else
+        $LProvider.setLocale('zh_cn');
+})
 .run(function(rest) {
     var base_url = '/management/';
     //var base_url = 'localhost:8000/management/';
@@ -6,14 +13,13 @@
 });
 
 app.controller('LoginCtrl', function($scope, $window, rest){
-    //TODO:remove:
     $scope.username='admin';
     $scope.password='111111';
     $scope.hasError=false;
 
     $scope.login = function() {
         $scope.hasError=false;
-        rest.endpoint('index.json').post({            
+        rest.endpoint('index.json').post({
             username: $scope.username,
             password: $scope.password
         }).then(function(x) {

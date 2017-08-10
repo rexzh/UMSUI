@@ -1,5 +1,5 @@
 ﻿app.controller('NavCtrl', function ($scope, $L, rest, $window, dataShare) {
-    $scope.brand = $L("Generic Platform");
+    
     $scope.userRole = $L("UserRole");
     $scope.logoutLabel = $L("Logout");
     $scope.selectOrg = $L("Select Organization");
@@ -12,6 +12,9 @@
         $scope.user.currentOrg = data.user.currentOrganization;
 
         dataShare.setData('user', $scope.user);
+        
+        //TODO:!!
+        $scope.brand = $L(dataShare.getData('brand'));
     });
 
     $scope.logout = function(msg, data){
@@ -146,9 +149,9 @@ app.controller('SystemStatusCtrl', function ($scope, $location, $window, $L, $ti
     })
 });
 
-app.controller('NavMenuCtrl', function ($rootScope, $scope, $window, $timeout, $L, rest, resetMenu, dataShare) {
-
-    rest.endpoint('/index.json').get().then(function(x){
+app.controller('NavMenuCtrl', function ($rootScope, $scope, $window, $timeout, $q, $L, rest, resetMenu, dataShare) {
+    var loginData = null;
+    var indexPromise = rest.endpoint('/index.json').get().then(function(x){
         if(x.result) {
             var menus = x.data.menus;
 
@@ -163,14 +166,29 @@ app.controller('NavMenuCtrl', function ($rootScope, $scope, $window, $timeout, $
 
             $scope.menus = menus;
             dataShare.setData('menus', menus);
-            $rootScope.$broadcast('login', x.data);
-            $timeout(function(){
-                resetMenu();
-            }, 0);
+            //TODO:Refactor
+            loginData = x.data;
         } else {
             if(x.data.error && x.data.error == 'NotLogin') {
                 $window.location.assign("./login.html");
             }
         }
+    });
+
+    var cfgPromise = rest.endpoint('sysConfig.json').get().then(function(x){
+        var cfgs = x.data.sysConfigs;
+        for(var i = 0; i < cfgs.length; i++) {
+            dataShare.setData(cfgs[i].cfgKey, cfgs[i].cfgValue);
+        }
+
+        $window.document.title = $L(dataShare.getData('brand'));
+    });
+
+    
+    $q.all([indexPromise, cfgPromise]).then(function() {
+        $rootScope.$broadcast('login', loginData);
+        $timeout(function(){
+            resetMenu();
+        }, 0);
     });
 });

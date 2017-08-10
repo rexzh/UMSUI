@@ -1,0 +1,42 @@
+<div class="row-fluid">
+  <a class="btn btn-primary btn-sm" ng-click="add()">
+    <i class="icon-plus"></i> 新增
+  </a>
+</div>
+
+<div class="row-fluid">
+  <table class="table bootstrap-datatable">
+    <thead>
+      <tr>
+        
+        <th>ID</th>
+        
+        <th>CfgKey</th>
+        
+        <th>CfgValue</th>
+        
+        <th>操作</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="sysConfig in sysConfigs">
+        
+        <td>{{sysConfig.id}}</td>
+        
+        <td>{{sysConfig.cfgKey}}</td>
+        
+        <td>{{sysConfig.cfgValue}}</td>
+        
+        <td class="center">
+          <a class="btn btn-primary btn-sm" ng-click="modify($index)">
+            <i class="icon-edit"></i> 修改
+          </a>
+          <a class="btn btn-danger btn-sm" ng-click="remove($index)">
+            <i class="icon-trash"></i> 删除
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
