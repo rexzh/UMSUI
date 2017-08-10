@@ -4,16 +4,13 @@
     $scope.logoutLabel = $L("Logout");
     $scope.selectOrg = $L("Select Organization");
 
-    $scope.$on('login', function(msg, data){
-        $scope.env = data.env;
-        $scope.user = data.user;
-        $scope.organizations = data.user.organizations;
-
-        $scope.user.currentOrg = data.user.currentOrganization;
-
-        dataShare.setData('user', $scope.user);
+    $scope.$on('login', function(msg){
         
-        //TODO:!!
+        $scope.user = dataShare.getData('user');
+        $scope.organizations = $scope.user.organizations;
+
+        $scope.user.currentOrg = $scope.user.currentOrganization;
+
         $scope.brand = $L(dataShare.getData('brand'));
     });
 
@@ -150,7 +147,7 @@ app.controller('SystemStatusCtrl', function ($scope, $location, $window, $L, $ti
 });
 
 app.controller('NavMenuCtrl', function ($rootScope, $scope, $window, $timeout, $q, $L, rest, resetMenu, dataShare) {
-    var loginData = null;
+    
     var indexPromise = rest.endpoint('/index.json').get().then(function(x){
         if(x.result) {
             var menus = x.data.menus;
@@ -166,8 +163,7 @@ app.controller('NavMenuCtrl', function ($rootScope, $scope, $window, $timeout, $
 
             $scope.menus = menus;
             dataShare.setData('menus', menus);
-            //TODO:Refactor
-            loginData = x.data;
+            dataShare.setData('user', x.data.user);
         } else {
             if(x.data.error && x.data.error == 'NotLogin') {
                 $window.location.assign("./login.html");
@@ -186,7 +182,7 @@ app.controller('NavMenuCtrl', function ($rootScope, $scope, $window, $timeout, $
 
     
     $q.all([indexPromise, cfgPromise]).then(function() {
-        $rootScope.$broadcast('login', loginData);
+        $rootScope.$broadcast('login');
         $timeout(function(){
             resetMenu();
         }, 0);
