@@ -2396,6 +2396,14 @@ footer {
 	      	border-radius: 0px;
 }
 
+footer a {
+	color: #ccc;
+}
+
+footer a:hover {
+	color: #fff;
+}
+
 /* Sparkline stats
 =================================================================== */
 

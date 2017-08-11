@@ -26,7 +26,7 @@
     </head>
 
     <body style="background-color: #080808">
-        <div class="container-fluid-full" ng-controller="LoginCtrl">
+        <div id="login" class="container-fluid-full" ng-controller="LoginCtrl">
             <div class="row-fluid">
 
                 <div class="row-fluid">
@@ -67,6 +67,22 @@
             </div>
         </div>
         <!--/fluid-row-->
+        
+        <footer id="footer" style="border-top: 1px solid #666; position: static; bottom: 0; display:none" ng-controller="FooterCtrl">
+            <p style="width: 40%;margin: auto; text-align: center;">
+                <span>
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action">
+                        <img src="http://www.beian.gov.cn/img/ghs.png">
+                        {{register}}
+                    </a>
+                </span>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>
+                <span>{{company}}&copy; {{copyright}}</span>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>
+                <span><a href="{{link}}">{{brand}} &#8482;</a></span>
+            </p>
+            
+        </footer>
 
         <!-- start: JavaScript-->
         <script src="lib/jquery-1.9.1.min.js"></script>

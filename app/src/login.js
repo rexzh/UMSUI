@@ -1,4 +1,12 @@
-﻿var app = angular.module('LoginModule', ['http.service', 'l10n'])
+﻿var login = angular.module('LoginModule', ['http.service', 'l10n'])
+.constant('resize', function(){
+    var winHeight = $(window).height();
+
+    if (winHeight) {
+        console.log(winHeight);
+        $("#login").css("min-height", winHeight - 46);
+    }
+})
 .config(function($LProvider){
     var lang = localStorage.getItem('lang');
     if(lang)
@@ -6,13 +14,33 @@
     else
         $LProvider.setLocale('zh_cn');
 })
-.run(function(rest) {
+.run(function(rest, resize) {
     var base_url = '/management/';
     //var base_url = 'localhost:8000/management/';
     rest.init(base_url);
+    resize();
+    $(window).bind("resize", resize);
+    $("footer").show();
 });
 
-app.controller('LoginCtrl', function($scope, $window, rest){
+login.controller('FooterCtrl', function($scope, rest){
+    rest.endpoint('sysConfig.json').get().then(function(x){
+        var cfg = {};
+        var arr = x.data.sysConfigs;
+        for(var i = 0; i < arr.length; i++) {
+            cfg[arr[i].cfgKey] = arr[i].cfgValue;
+        }
+        
+        $scope.brand = cfg['brand'];
+        $scope.trademark = cfg['trademark'];
+        $scope.copyright = cfg['copyright'];
+        $scope.link = cfg['link'];
+        $scope.company = cfg['company'];
+        $scope.register = cfg['register'];
+    });
+});
+
+login.controller('LoginCtrl', function($scope, $window, rest){
     $scope.username='admin';
     $scope.password='111111';
     $scope.hasError=false;
