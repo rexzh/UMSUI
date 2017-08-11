@@ -7,7 +7,7 @@ l10n.addResource('zh_cn', {
     "Menu": "菜单",
     "Submenu": "子菜单",
     "Preference": "用户偏好",
-    "SystemConfig": "系统配置",
+    "System Config": "系统配置",
     "Password": "密码",
     "Global Dictionary": "全局字典",
     "Local Dictionary": "局部字典",

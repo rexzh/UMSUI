@@ -7,7 +7,7 @@ l10n.addResource('en_us', {
     "Menu": "Menu",
     "Submenu": "Submenu",
     "Preference": "User Preference",
-    "SystemConfig": "System Config",
+    "System Config": "System Config",
     "Password": "Password",
     "Global Dictionary": "Global Dictionary",
     "Local Dictionary": "Local Dictionary",
