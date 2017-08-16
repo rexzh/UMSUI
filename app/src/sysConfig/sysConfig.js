@@ -1,5 +1,10 @@
 //generator
-app.controller('SysConfigCtrl', function($scope, $location, rest, msgbox) {
+app.controller('SysConfigCtrl', function($scope, $location, $L, rest, msgbox) {
+    $scope.const = $L.const;
+    $scope.lconst = {
+        Key: $L('Key'),
+        Value: $L('Value')
+    };
     
     rest.endpoint('/sysConfig.json').get().then(function(resp){
         if(resp.result) {

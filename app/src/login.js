@@ -23,7 +23,7 @@
     $("footer").show();
 });
 
-login.controller('FooterCtrl', function($scope, rest){
+login.controller('FooterCtrl', function($scope, $window, $L, rest){
     rest.endpoint('sysConfig.json').get().then(function(x){
         var cfg = {};
         var arr = x.data.sysConfigs;
@@ -37,6 +37,8 @@ login.controller('FooterCtrl', function($scope, rest){
         $scope.link = cfg['link'];
         $scope.company = cfg['company'];
         $scope.register = cfg['register'];
+
+        $window.document.title = $L(cfg['brand']);
     });
 });
 
