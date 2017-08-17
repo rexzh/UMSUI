@@ -59,8 +59,6 @@ app.constant('routes', [
     {when: '/localDictAdd/', templateUrl: './src/dictionary/localDictEdit.html', controller: 'LocalDictEditCtrl', name: 'Local Dictionary'},
     {when: '/localDictModify/:id', templateUrl: './src/dictionary/localDictEdit.html', controller: 'LocalDictEditCtrl', name: 'Local Dictionary'},
     {when: '/sysConfig/', templateUrl: './src/sysConfig/sysConfig.html', controller: 'SysConfigCtrl', name: 'System Config'},
-    {when: '/sysConfigAdd/', templateUrl: './src/sysConfig/sysConfigEdit.html', controller: 'SysConfigEditCtrl'},
-    {when: '/sysConfigModify/:id', templateUrl: './src/sysConfig/sysConfigEdit.html', controller: 'SysConfigEditCtrl'},
     {when: '/upload', templateUrl: './src/upload/upload.html', controller: 'UploadCtrl', name: 'Upload'},
     {when: '/404/', templateUrl: './src/404.html'}
 ]);

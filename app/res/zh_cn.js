@@ -68,7 +68,6 @@ l10n.addResource('zh_cn', {
     "TimeZone": "时区",
     "MessageCount": "消息数量",
     "Frequency": "频率",
-
     "UserCode": "用户名",
     "UserName": "姓名",
     "Enabled": "可用",
@@ -82,6 +81,7 @@ l10n.addResource('zh_cn', {
     "Tel": "电话",
     "Comment": "备注",
     "Type": "类型",
+    "Key": "键",
     "Value": "值",
     "Icon": "图标",
     "Link": "链接",

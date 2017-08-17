@@ -8,28 +8,28 @@ app.controller('SysConfigCtrl', function($scope, $location, $L, rest, msgbox) {
     
     rest.endpoint('/sysConfig.json').get().then(function(resp){
         if(resp.result) {
-            //console.log(resp.data);
             $scope.sysConfigs = resp.data.sysConfigs;
+            $scope.editable = new Array(resp.data.sysConfigs.length);
+            for(var i = 0; i < $scope.editable.length; i++) {
+                $scope.edit[i] = false;
+            }
         }
     });
 
-    $scope.remove = function(idx) {
-        msgbox.show().then(function(x){
-            if(x) {
-                var id = $scope.sysConfigs[idx].id;
-                rest.endpoint('sysConfig.json', id).delete().then(function(resp){
-                    if(resp.result)
-						$scope.sysConfigs.splice(idx, 1);
-                });
-            }
-        });
-    }
-
-    $scope.add = function() {
-        $location.path("/sysConfigAdd");
+    $scope.edit = function(idx) {
+        for(var i = 0; i < $scope.editable.length; i++) {
+            $scope.editable[i] = false;
+        }
+        $scope.editable[idx] = true;
     };
 
-    $scope.modify = function(idx) {
-        $location.path("/sysConfigModify/" + $scope.sysConfigs[idx].id);
+    $scope.cancel = function(idx) {
+        $scope.editable[idx] = false;
+    };
+
+    $scope.save = function(idx) {
+        rest.endpoint('sysConfig.json').put($scope.sysConfigs[idx]).then(function(x){
+            $scope.editable[idx] = false;
+        });
     };
 });

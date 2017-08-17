@@ -81,6 +81,7 @@ l10n.addResource('en_us', {
     "Tel": "Tel",
     "Comment": "Comment",
     "Type": "Type",
+    "Key": "Key",
     "Value": "Value",
     "Icon": "Icon",
     "Link": "Link",

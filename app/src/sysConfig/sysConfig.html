@@ -1,21 +1,16 @@
 <div class="row-fluid">
-  <a class="btn btn-primary btn-sm" ng-click="add()">
-    <i class="icon-plus"></i> 新增
-  </a>
-</div>
-
-<div class="row-fluid">
   <table class="table bootstrap-datatable">
     <thead>
       <tr>
         
-        <th>ID</th>
+        <th width="15%">ID</th>
         
-        <th>{{lconst.Key}}</th>
+        <th width="15%">{{lconst.Key}}</th>
         
-        <th>{{lconst.Value}}</th>
+        <th width="45%">{{lconst.Value}}</th>
         
-        <th>{{const.Operation}}</th>
+        <th width="25%">{{const.Operation}}</th>
+        
       </tr>
     </thead>
 
@@ -26,16 +21,19 @@
         
         <td>{{sysConfig.cfgKey}}</td>
         
-        <td>{{sysConfig.cfgValue}}</td>
+        <td><span ng-show="!editable[$index]">{{sysConfig.cfgValue}}</span><input ng-show="editable[$index]" ng-model="sysConfig.cfgValue"></td>
         
         <td class="center">
-          <a class="btn btn-primary btn-sm" ng-click="modify($index)">
-            <i class="icon-edit"></i> 修改
+          <a class="btn btn-primary btn-sm" ng-click="edit($index)">
+            {{const.Modify}}
           </a>
-          <a class="btn btn-danger btn-sm" ng-click="remove($index)">
-            <i class="icon-trash"></i> 删除
+          <a class="btn btn-primary btn-sm" ng-click="save($index)">
+            {{const.Save}}
           </a>
-        </td>
+          <a class="btn btn-sm" ng-click="cancel($index)">
+            {{const.Cancel}}
+          </a>
+        </td>        
       </tr>
     </tbody>
   </table>
