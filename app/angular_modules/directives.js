@@ -426,7 +426,7 @@
         return {
             restrict: 'AE',
             replace: true,
-            template: '<div data-role="preloader" data-type="metro" data-style="dark" style="top: -28px;" class="preloader-metro dark-style" ng>' +
+            template: '<div data-role="preloader" data-type="metro" data-style="dark" style="top: -28px;" class="preloader-metro dark-style">' +
                         '<div class="circle"></div>' +
                         '<div class="circle"></div>' +
                         '<div class="circle"></div>' +

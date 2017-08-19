@@ -5,8 +5,9 @@
     svc.factory('ajaxInterceptor', function ($rootScope) {
         var interceptor = {
             request: function(config) {
-                //console.log("request", config);
-                $rootScope.$broadcast('ajaxStart');
+                if(!config.url.match(/^(.)*.html/g)) {
+                    $rootScope.$broadcast('ajaxStart');
+                }
                 return config;
             },
 
