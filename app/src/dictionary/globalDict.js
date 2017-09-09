@@ -1,5 +1,5 @@
 //generator
-app.controller('GlobalDictCtrl', function($scope, $location, $L, rest, msgbox) {
+app.controller('GlobalDictCtrl', function($scope, $location, $L, rest, msgbox, dataPass) {
     $scope.const = $L.const;
     $scope.lconst = {
         Value: $L('Value'),
@@ -10,15 +10,31 @@ app.controller('GlobalDictCtrl', function($scope, $location, $L, rest, msgbox) {
 
     rest.endpoint('/dictType.json').get({global: true}).then(function(resp){
         $scope.types = resp.data.dictTypes;
+
+        var pass = dataPass.getData('gDict');
+        if(pass) {
+            for(var i = 0; i < $scope.types.length; i++) {
+                if($scope.types[i].id == pass.id) {
+                    $scope.type = $scope.types[i];
+                    refreshData();
+                    break;
+                }
+            }
+        }
     });
 
-    $scope.update = function() {
+    function refreshData(){
         rest.endpoint('/globalDict.json').get({typeId: $scope.type.id}).then(function(resp){
             if(resp.result) {
-                //console.log(resp.data);
                 $scope.globalDicts = resp.data.globalDicts;
             }
         });
+    }
+
+    $scope.update = function() {
+        dataPass.setData("gDictEdit", $scope.type);
+
+        refreshData();
     }
 
     $scope.remove = function(idx) {
@@ -34,6 +50,9 @@ app.controller('GlobalDictCtrl', function($scope, $location, $L, rest, msgbox) {
     }
 
     $scope.add = function() {
+        if($scope.type) {
+            dataPass.setData("gDictEdit", $scope.type);
+        }
         $location.path("/globalDictAdd");
     };
 

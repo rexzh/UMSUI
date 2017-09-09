@@ -124,13 +124,32 @@
     var svc = angular.module('common', []);
 
     svc.factory('dataShare', function () {
-        var data = {};
+        var _data = {};
         return {
             getData: function(key) {
-                return data[key];
+                return _data[key];
             },
             setData: function(key, val) {
-                data[key] = val;
+                _data[key] = val;
+            }
+        }
+    });
+
+    svc.factory('dataPass', function () {
+        var _key = null;
+        var _data = {};
+        return {
+            getData: function(key) {
+                var result = _data;
+                _data = {};
+                if(_key == key)
+                    return result;
+                else
+                    return null;
+            },
+            setData: function(key, val) {
+                _key = key;
+                _data = val;
             }
         }
     });

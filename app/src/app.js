@@ -31,7 +31,7 @@ app.constant('resize', function(){
 });
 
 app.constant('routes', [
-    {when: '/settings/', templateUrl: './src/settings/settings.html', controller: 'SettingsCtrl', name: 'Settings'},
+    {when: '/settings/', templateUrl: './src/settings/settings.html', controller: 'SettingsCtrl', name: 'Preference'},
     {when: '/about/', templateUrl: './src/about/about.html', controller: 'AboutCtrl', name: 'About'},
     {when: '/chgpwd/', templateUrl: './src/chgpwd/chgpwd.html', controller: 'ChgpwdCtrl', name: 'Password Settings'},
     {when: '/user/', templateUrl: './src/user/user.html', controller: 'UserCtrl', name: 'User'},

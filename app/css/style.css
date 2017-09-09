@@ -902,7 +902,7 @@ ul.messages li .message {
 
 .box-content {
 	position: relative;
-	z-index: 50;
+	/*z-index: 50;*/
   	margin-top: -1px;
 	padding: 10px;
 	background: #fff !important;

@@ -32,7 +32,7 @@
                         <div class="icons">
                             <a href="#"><i class="halflings-icon cog"></i></a>
                         </div>
-                        <h2>登录</h2>
+                        <h2>{{const.Login}}</h2>
                         <form class="form-horizontal" id="form">
                             <fieldset>
                                 <div class="input-prepend">
@@ -48,13 +48,13 @@
                                 <div class="clearfix"></div>
 
                                 <div class="button-login">
-                                    <button type="button" class="btn btn-primary" ng-click="login()">提交</button>
+                                    <button type="button" class="btn btn-primary" ng-click="login()">{{const.OK}}</button>
                                 </div>
 
                                 <div class="clearfix"></div>
 
                                 <div class="alert alert-danger" style="margin: 5px 5px;" ng-show="hasError">
-                                    <h4 class="alert-heading">错误</h4>
+                                    <h4 class="alert-heading">{{const.Error}}</h4>
                                     <p>{{reason}}</p>
                                 </div>
 

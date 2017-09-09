@@ -1,4 +1,5 @@
 l10n.addResource('en_us', {
+    "Login": "Login",
     "Home": "Home",
     "Help": "Help",
     "User": "User",

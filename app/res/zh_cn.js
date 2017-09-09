@@ -1,4 +1,5 @@
 l10n.addResource('zh_cn', {
+    "Login": "登录",
     "Home": "首页",
     "Help": "帮助",
     "User": "用户",

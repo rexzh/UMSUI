@@ -42,7 +42,13 @@ login.controller('FooterCtrl', function($scope, $window, $L, rest){
     });
 });
 
-login.controller('LoginCtrl', function($scope, $window, rest){
+login.controller('LoginCtrl', function($scope, $window, rest, $L){
+    $scope.const = {
+        Login: $L("Login"),
+        OK: $L("OK"),
+        Error: $L("Error")
+    };
+
     $scope.username='admin';
     $scope.password='111111';
     $scope.hasError=false;
