@@ -1947,6 +1947,7 @@ fieldset[disabled] .btn-link:focus {
   -webkit-box-shadow: none;
      -moz-box-shadow: none;
           box-shadow: none;
+  cursor: pointer;
 }
 
 .pagination ul > li:first-child > a,
