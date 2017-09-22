@@ -1,18 +1,31 @@
 ﻿(function () {
     'use strict';
     var metro = angular.module('metro.directive', ['common', 'l10n']);
+    var _dbg = true;
+    metro.setDebug = function(debug) {
+        _dbg = debug;
+    }
 
-    metro.factory('timeFormatter', function () {
+    metro.directive('metroIfDebug', function($animate) {//Note: most code from ngIf
         return {
-            format: function (t) {
-                var yyyy = t.getFullYear().toString();
-                var mm = (t.getMonth() + 1).toString();
-                var dd = t.getDate().toString();
-                var hh = t.getHours().toString();
-                var mi = t.getMinutes().toString();
-                var ss = t.getSeconds().toString();
-                return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]) + ' ' +
-                        (hh[1] ? hh : '0' + hh[0]) + ':' + (mi[1] ? mi : '0' + mi[0]) + ':' + (ss[1] ? ss : '0' + ss[0]);
+            multiElement: true,
+            transclude: 'element',
+            priority: 600,
+            terminal: true,
+            restrict: 'A',
+            $$tlb: true,
+            link: function($scope, $element, $attr, ctrl, $transclude) {
+                var childScope;
+                if (_dbg) {
+                    if (!childScope) {
+                        $transclude(function(clone, newScope) {
+                            childScope = newScope;
+                            clone[clone.length++] = document.createComment(' end IfDebug: ' + $attr.metroIfDebug + ' ');
+                            
+                            $animate.enter(clone, $element.parent(), $element);
+                        });
+                    }
+                }
             }
         }
     });
@@ -251,7 +264,7 @@
         };
     });
 
-    metro.directive('metroDatepicker', function () {
+    metro.directive('metroDatepicker', function ($L) {
         return {
             restrict: 'AE',
             replace: true,
@@ -260,7 +273,8 @@
             },
             template: '<input type="text">',
             link: function (scope, element, attrs) {
-                var format = attrs["dpFormat"] || "yy-mm-dd";
+                var fmt = $L.getDateFormat();
+                var format = attrs["dpFormat"] || fmt.replace('yyyy', 'yy');
                 $(element).datepicker({dateFormat: format});
             }
         };
@@ -272,7 +286,8 @@
             replace: true,
             require: '?ngModel',
             scope: {
-                disabled: '=ngDisabled'
+                disabled: '=ngDisabled',
+                changed: '&changed'
             },
             template: '<input class="input-file" type="file">',
             link: function(scope, element, attrs, ngModel) {
@@ -281,6 +296,8 @@
                 $(element).on('change', function(){
                     var files = $(element).get(0).files;
                     ngModel && scope.$apply(ngModel.$setViewValue(files));
+
+                    scope.changed && scope.changed({files: files});
                 });
                 
                 if (ngModel) {
@@ -326,7 +343,7 @@
                         span.removeClass('checked');
 
                     ngModel && scope.$apply(ngModel.$setViewValue(!checked));
-                });                
+                });
                 
                 if (ngModel) {
                     ngModel.$render = function () {
@@ -414,7 +431,7 @@
                     $($event.currentTarget).addClass('active');
                 }
             },
-            compile: function(element, attrs) {                
+            compile: function(element, attrs) {
                 return function (scope, element, attrs) {
                     
                 }
@@ -580,6 +597,35 @@
         }
     });
 
+    metro.directive('metroEditor', function($timeout) {
+        return {
+            restrict: 'AE',
+            replace: false,
+            require: '?ngModel',
+            template: '<script id=\"editor-container\" name=\"content\" type=\"text/plain\"></script>',
+            link: function(scope, element, attr, ngModel) {
+                var ue = UM.getEditor('editor-container');
+                ue.ready(function(){
+                    
+                    if(ngModel) {
+                        $timeout(function(){
+                            ue.setContent(ngModel.$modelValue || '');
+                        }, 0);
+                    }
+                });
+                
+                ue.addListener("blur",function(){
+                    var ct = ue.getContent();
+                    ngModel && scope.$apply(ngModel.$setViewValue(ct));
+                });
+
+                scope.$on('$destroy', function() {
+                    ue.destroy();
+                });
+            }
+        }
+    });
+
     metro.factory('msgbox', function($q, $compile, $rootScope, $interpolate, $L){
         var html = '<div class="modal hide fade">' +
                         '<div class="modal-header">' +
@@ -621,11 +667,19 @@
 
     metro.factory('notify', function($rootScope){
         return {
-            info: function(msg) {
+            info: function() {
+                var msg = "" + arguments[0];
+                for(var i = 1; i < arguments.length; i++) {
+                    msg = msg + ' ' + arguments[i];
+                }
                 $rootScope.$broadcast('notify', {type: "success", text: msg});
             },
 
             error: function(msg) {
+                var msg = "" + arguments[0];
+                for(var i = 1; i < arguments.length; i++) {
+                    msg = msg + ' ' + arguments[i];
+                }
                 $rootScope.$broadcast('notify', {type: "danger", text: msg});
             }
         }

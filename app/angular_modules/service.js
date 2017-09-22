@@ -121,9 +121,21 @@
 
 (function(){
     'use strict';
-    var svc = angular.module('common', []);
+    var common = angular.module('common', ['l10n']);
 
-    svc.factory('dataShare', function () {
+    common.filter('unixTime', function($L){
+        return function(timestamp){
+            return $L.formatDate(new Date(timestamp));
+        }
+    });
+
+    common.filter('money', function($L){
+        return function(amount) {
+            return (amount / 100).toFixed(2);
+        }
+    });
+
+    common.factory('dataShare', function () {
         var _data = {};
         return {
             getData: function(key) {
@@ -135,7 +147,7 @@
         }
     });
 
-    svc.factory('dataPass', function () {
+    common.factory('dataPass', function () {
         var _key = null;
         var _data = {};
         return {
